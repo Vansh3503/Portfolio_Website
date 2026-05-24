@@ -1,0 +1,252 @@
+.section {
+  position: relative;
+  padding: clamp(60px, 10vh, 100px) clamp(24px, 5vw, 64px)
+    clamp(80px, 14vh, 160px);
+  background: linear-gradient(180deg, #08080b 0%, #06060a 100%);
+}
+
+.inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 30px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.item {
+  position: relative;
+  padding: 0 0 64px 0;
+}
+
+.item:last-child { padding-bottom: 0; }
+
+.dot {
+  position: absolute;
+  left: -36px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255, 138, 61, 0.18),
+    0 0 18px rgba(255, 138, 61, 0.6);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.role {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(22px, 2vw, 28px);
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.company {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+}
+
+.meta { text-align: right; }
+
+.period {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+
+.where {
+  font-size: 12px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 6px;
+  height: 1px;
+  background: var(--accent-warm);
+}
+
+.certBlock,
+.eduBlock {
+  margin-top: clamp(60px, 10vh, 100px);
+}
+
+.certTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  margin: 0 0 24px;
+  color: var(--ink);
+  position: relative;
+  padding-left: 18px;
+}
+
+.certTitle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(255, 138, 61, 0.6);
+}
+
+.certList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.certItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.certBullet {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--accent-warm);
+}
+
+.eduCard {
+  padding: 24px 24px 22px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.eduTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.eduRole {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.eduCompany {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  margin-top: 4px;
+}
+
+.eduGpa {
+  margin-top: 14px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 720px) {
+  .certList { grid-template-columns: 1fr; }
+  .head, .eduTop { flex-direction: column; }
+  .meta { text-align: left; }
+}
+
+
+.jobLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 138, 61, 0.08);
+  border: 1px solid rgba(255, 138, 61, 0.25);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+  transition: transform 0.3s ease, background 0.3s ease,
+    border-color 0.3s ease, color 0.3s ease;
+}
+
+.jobLink:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 138, 61, 0.14);
+  border-color: rgba(255, 138, 61, 0.5);
+  color: var(--ink);
+}
+
+
+@media (max-width: 540px) {
+  .list {
+    padding-left: 22px;
+  }
+  .dot {
+    left: -28px;
+    width: 10px;
+    height: 10px;
+  }
+  .item { padding-bottom: 44px; }
+  .role { font-size: 22px; }
+  .bullets li { font-size: 13.5px; padding-left: 14px; }
+  .meta { text-align: left; }
+  .period { font-size: 13px; }
+  .where { font-size: 11px; }
+  .certTitle { font-size: 20px; }
+  .certBlock, .eduBlock { margin-top: 60px; }
+}

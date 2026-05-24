@@ -1,0 +1,269 @@
+.section {
+  position: relative;
+  padding: clamp(60px, 10vh, 100px) clamp(24px, 5vw, 64px)
+    clamp(80px, 14vh, 160px);
+  background: linear-gradient(180deg, #08080b 0%, #06060a 100%);
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* --- Tabs / filter --- */
+.filters {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 36px;
+}
+
+.filterBtn {
+  position: relative;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: transparent;
+  border: 0;
+  color: var(--ink-mute);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.filterBtn:hover { color: var(--ink); }
+
+.filterActive {
+  color: #1a0c04;
+  background: var(--accent);
+  font-weight: 600;
+}
+
+/* --- Showcase grid --- */
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  isolation: isolate;
+  cursor: default;
+  min-height: 380px;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(255, 138, 61, 0.55) 0%,
+    rgba(255, 138, 61, 0) 35%,
+    rgba(90, 169, 255, 0) 60%,
+    rgba(90, 169, 255, 0.45) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    400px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(255, 138, 61, 0.16),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card:hover::before,
+.card:hover::after { opacity: 1; }
+
+.card > * { position: relative; z-index: 2; }
+
+/* Visual header inside the card — abstract gradient artwork */
+.poster {
+  position: relative;
+  height: 180px;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 60% at 80% 0%, rgba(255, 138, 61, 0.7), transparent 70%),
+    radial-gradient(60% 60% at 0% 100%, rgba(90, 169, 255, 0.5), transparent 70%),
+    linear-gradient(160deg, #1a0e08 0%, #0a0a12 60%, #08111d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.posterGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 36px 36px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(80% 70% at 50% 50%, #000, transparent 80%);
+  -webkit-mask-image: radial-gradient(80% 70% at 50% 50%, #000, transparent 80%);
+}
+
+.posterGlyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 80px;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.posterChip {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(8, 8, 11, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.posterChipDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  box-shadow: 0 0 10px var(--c, var(--accent));
+}
+
+.posterYear {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.04em;
+}
+
+.cardTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(22px, 1.8vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--ink);
+}
+
+.cardSummary {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+.impact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(255, 138, 61, 0.1);
+  color: var(--accent-warm);
+  border: 1px solid rgba(255, 138, 61, 0.3);
+}
+
+.impactDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--ink-soft);
+  transition: color 0.25s ease, border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.chip:hover {
+  color: var(--ink);
+  background: rgba(255, 138, 61, 0.08);
+  border-color: rgba(255, 138, 61, 0.4);
+}
+
+@media (max-width: 880px) {
+  .list { grid-template-columns: 1fr; }
+  .poster { height: 150px; }
+  .posterGlyph { font-size: 60px; }
+}
+
+
+@media (max-width: 540px) {
+  .filters { gap: 4px; padding: 4px; }
+  .filterBtn { padding: 8px 12px; font-size: 11px; letter-spacing: 0.14em; }
+  .card { padding: 22px 20px; min-height: 0; }
+  .poster { height: 130px; }
+  .posterGlyph { font-size: 50px; }
+  .cardTitle { font-size: 20px; }
+  .cardSummary { font-size: 13.5px; }
+}

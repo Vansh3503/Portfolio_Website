@@ -1,0 +1,59 @@
+.dot,
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 90;
+  border-radius: 50%;
+  will-change: transform;
+  mix-blend-mode: difference;
+  opacity: 0;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.25s ease, width 0.25s ease, height 0.25s ease,
+    background 0.25s ease;
+}
+
+.ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  background: transparent;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.3s ease, width 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    height 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.35s ease, background 0.35s ease;
+}
+
+.ready { opacity: 1; }
+
+/* Hover state on interactive targets */
+.hover .dot {
+  width: 0;
+  height: 0;
+}
+
+.hover .ring {
+  width: 56px;
+  height: 56px;
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.18);
+  mix-blend-mode: difference;
+}
+
+/* Press state */
+.press .ring {
+  width: 26px;
+  height: 26px;
+}
+
+/* Hide on touch / coarse pointers — system cursor stays */
+@media (hover: none), (pointer: coarse) {
+  .dot, .ring { display: none; }
+}
