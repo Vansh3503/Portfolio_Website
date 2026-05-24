@@ -1,11 +1,13 @@
 "use client";
 
 import Reveal from "@/components/Reveal/Reveal";
+import PageBackdrop from "@/components/PageBackdrop/PageBackdrop";
 import styles from "./PageHeader.module.css";
 
-export default function PageHeader({ eyebrow, title, accent, lead }) {
+export default function PageHeader({ eyebrow, title, accent, lead, variant = "warm" }) {
   return (
     <header className={styles.wrap}>
+      <PageBackdrop variant={variant} />
       <div className={styles.inner}>
         <Reveal>
           {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}

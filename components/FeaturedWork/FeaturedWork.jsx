@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "@/components/Reveal/Reveal";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import { PROJECTS } from "@/lib/projects";
 import styles from "./FeaturedWork.module.css";
 
@@ -11,6 +12,7 @@ export default function FeaturedWork() {
 
   return (
     <section className={styles.section}>
+      <SectionBackdrop variant="ember" />
       <div className={styles.inner}>
         <div className={styles.head}>
           <Reveal>
@@ -56,11 +58,6 @@ export default function FeaturedWork() {
               </div>
               <div className={styles.rowImpact}>{p.impact}</div>
               <div className={styles.rowYear}>{p.year}</div>
-              <span className={styles.rowArrow} aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14" /><path d="M13 5l7 7-7 7" />
-                </svg>
-              </span>
             </motion.li>
           ))}
         </motion.ol>

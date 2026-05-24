@@ -1,15 +1,15 @@
 .section {
   position: relative;
   padding: clamp(80px, 14vh, 160px) clamp(24px, 5vw, 64px);
-  background:
-    radial-gradient(80% 60% at 80% 0%, rgba(255, 138, 61, 0.12), transparent 60%),
-    radial-gradient(60% 50% at 0% 100%, rgba(90, 169, 255, 0.1), transparent 60%),
-    linear-gradient(180deg, #06060a 0%, #08080b 100%);
+  background: linear-gradient(180deg, #06060a 0%, #08080b 100%);
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+  isolation: isolate;
 }
 
 .inner {
+  position: relative;
+  z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
   display: grid;

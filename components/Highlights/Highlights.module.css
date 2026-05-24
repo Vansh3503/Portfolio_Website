@@ -4,6 +4,7 @@
   padding: clamp(80px, 14vh, 160px) clamp(24px, 5vw, 64px);
   background: linear-gradient(180deg, #07070a 0%, #0a0a0f 100%);
   overflow: hidden;
+  isolation: isolate;
 }
 
 .section::before {
@@ -19,9 +20,12 @@
     rgba(255, 138, 61, 0.4) 50%,
     transparent 100%
   );
+  z-index: 2;
 }
 
 .inner {
+  position: relative;
+  z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
 }
@@ -170,6 +174,24 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-mute);
+}
+
+.cardTags {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cardTag {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(255, 138, 61, 0.08);
+  border: 1px solid rgba(255, 138, 61, 0.25);
+  color: var(--accent-warm);
+  font-weight: 500;
 }
 
 @media (max-width: 880px) {

@@ -15,6 +15,7 @@ export default function WorkPage() {
         title="Things I've"
         accent="shipped."
         lead="Production AI platforms, agentic systems, and RAG infrastructure built across the AI Studio at eInfoChips and personal experiments."
+        variant="warm"
       />
       <WorkGrid />
     </>

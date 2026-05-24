@@ -15,6 +15,7 @@ export default function ContactPage() {
         title="Let's build"
         accent="something cinematic."
         lead="Open to AI engineering roles, agentic system collaborations, and anything where retrieval, evaluation, and great UX meet."
+        variant="green"
       />
       <Contact />
     </>

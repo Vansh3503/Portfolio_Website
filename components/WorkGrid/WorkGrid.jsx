@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { PROJECTS } from "@/lib/projects";
+import ProjectPoster from "@/components/ProjectPoster/ProjectPoster";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import styles from "./WorkGrid.module.css";
 
 const FILTERS = [
@@ -38,6 +40,7 @@ export default function WorkGrid() {
 
   return (
     <section className={styles.section}>
+      <SectionBackdrop variant="warm" />
       <div className={styles.inner}>
         <div className={styles.filters}>
           {FILTERS.map((f) => (
@@ -56,13 +59,6 @@ export default function WorkGrid() {
 
         <motion.ul className={styles.list} layout>
           {filtered.map((p, i) => {
-            const initials = p.title
-              .replace(/[^A-Za-z\s]/g, "")
-              .split(/\s+/)
-              .filter(Boolean)
-              .slice(0, 3)
-              .map((w) => w[0])
-              .join("");
             return (
               <motion.li
                 key={p.slug}
@@ -81,8 +77,7 @@ export default function WorkGrid() {
                 whileHover={{ y: -6 }}
               >
                 <div className={styles.poster} aria-hidden="true">
-                  <div className={styles.posterGrid} />
-                  <div className={styles.posterGlyph}>{initials}</div>
+                  <ProjectPoster slug={p.slug} accent={p.accent} />
                   <span className={styles.posterChip}>
                     <span className={styles.posterChipDot} />
                     {p.company}

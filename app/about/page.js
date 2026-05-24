@@ -16,6 +16,7 @@ export default function AboutPage() {
         title="The story behind the"
         accent="pixels and the python."
         lead="Engineer, builder, and quiet motion-design nerd. Below: the work, the toolbox, and the off-duty life."
+        variant="violet"
       />
       <AboutHero />
       <OffDuty />

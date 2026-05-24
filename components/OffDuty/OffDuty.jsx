@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import styles from "./OffDuty.module.css";
 
 const HOBBIES = [
@@ -16,6 +17,7 @@ const HOBBIES = [
 export default function OffDuty() {
   return (
     <section className={styles.section}>
+      <SectionBackdrop variant="violet" />
       <div className={styles.inner}>
         <motion.div
           className={styles.copy}

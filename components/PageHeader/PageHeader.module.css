@@ -2,19 +2,10 @@
   position: relative;
   padding: clamp(140px, 22vh, 220px) clamp(24px, 5vw, 64px)
     clamp(60px, 10vh, 100px);
-  background: radial-gradient(
-      120% 100% at 80% 0%,
-      rgba(255, 138, 61, 0.18),
-      transparent 55%
-    ),
-    radial-gradient(
-      120% 100% at 0% 0%,
-      rgba(90, 169, 255, 0.1),
-      transparent 50%
-    ),
-    linear-gradient(180deg, #06060a 0%, #08080b 100%);
+  background: linear-gradient(180deg, #06060a 0%, #08080b 100%);
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  isolation: isolate;
 }
 
 .wrap::after {

@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { playTick, playBoot, playSuccess, unlockAudio } from "@/lib/sound";
 import styles from "./Preloader.module.css";
 
 const LINES = [
@@ -21,17 +22,40 @@ const MIN_DURATION = 2400; // ms — guarantees the preloader doesn't flicker
 export default function Preloader() {
   const [show, setShow] = useState(true);
   const [revealed, setRevealed] = useState(0);
+  const lastSoundIdx = useRef(-1);
 
   // Smooth spring-driven progress bar
   const raw = useMotionValue(0);
   const spring = useSpring(raw, { stiffness: 110, damping: 22, mass: 0.8 });
   const width = useTransform(spring, (v) => `${Math.min(100, v)}%`);
 
+  // Try to unlock audio immediately so the preloader's own ticks can play.
+  // Most browsers still gate this until a user gesture; we then layer in a
+  // "kick" on the first pointermove/click which retries the unlock.
   useEffect(() => {
-    // Stream lines roughly every (MIN_DURATION / lines)
+    unlockAudio();
+    const kick = () => unlockAudio();
+    window.addEventListener("pointerdown", kick, { once: true });
+    window.addEventListener("keydown", kick, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", kick);
+      window.removeEventListener("keydown", kick);
+    };
+  }, []);
+
+  // Stream lines with pitch-shifted ticks per kind
+  useEffect(() => {
     const perLine = Math.max(160, Math.floor(MIN_DURATION / LINES.length));
-    const timers = LINES.map((_, i) =>
-      setTimeout(() => setRevealed((r) => Math.max(r, i + 1)), perLine * i)
+    const timers = LINES.map((line, i) =>
+      setTimeout(() => {
+        setRevealed((r) => Math.max(r, i + 1));
+        if (lastSoundIdx.current < i) {
+          lastSoundIdx.current = i;
+          if (line.kind === "ok") playTick("high");
+          else if (line.kind === "prompt") playTick("mid");
+          else playTick("low");
+        }
+      }, perLine * i)
     );
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -41,7 +65,6 @@ export default function Preloader() {
   }, [revealed, raw]);
 
   useEffect(() => {
-    // Coordinate with window load + min duration
     const start = performance.now();
     let loaded = false;
 
@@ -51,6 +74,11 @@ export default function Preloader() {
       const wait = Math.max(0, MIN_DURATION - elapsed);
       setTimeout(() => {
         raw.set(100);
+        // Boot sweep + chime as the curtain lifts
+        playBoot();
+        setTimeout(() => playSuccess(), 220);
+        // Tell the hero video the preloader is done so it can unmute
+        window.dispatchEvent(new Event("preloader:done"));
         setTimeout(() => setShow(false), 500);
       }, wait);
     };
@@ -58,7 +86,6 @@ export default function Preloader() {
     if (document.readyState === "complete") onLoad();
     else window.addEventListener("load", onLoad, { once: true });
 
-    // Hard cap so preloader never lingers if `load` is slow on dev HMR
     const cap = setTimeout(() => {
       if (!loaded) onLoad();
     }, 4500);

@@ -3,9 +3,13 @@
   padding: clamp(60px, 10vh, 100px) clamp(24px, 5vw, 64px)
     clamp(80px, 14vh, 160px);
   background: linear-gradient(180deg, #08080b 0%, #06060a 100%);
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .inner {
+  position: relative;
+  z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
   display: grid;

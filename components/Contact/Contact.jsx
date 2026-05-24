@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Reveal from "@/components/Reveal/Reveal";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
@@ -21,6 +22,7 @@ export default function Contact() {
 
   return (
     <section className={styles.section}>
+      <SectionBackdrop variant="green" />
       <div className={styles.inner}>
         <div className={styles.left}>
           <Reveal>
@@ -70,6 +72,17 @@ export default function Contact() {
               <div className={styles.contactLabel}>Phone</div>
               <div className={styles.contactValue}>+91 99253 51328</div>
               <span className={styles.contactArrow} aria-hidden="true">→</span>
+            </a>
+            <a
+              className={styles.contactRow}
+              href="/Vansh_Malhotra_Resume.pdf"
+              download
+            >
+              <div className={styles.contactLabel}>Resume</div>
+              <div className={styles.contactValue}>
+                Download PDF · 132 KB
+              </div>
+              <span className={styles.contactArrow} aria-hidden="true">↓</span>
             </a>
           </Reveal>
         </div>

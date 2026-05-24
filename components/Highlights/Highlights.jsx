@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "@/components/Reveal/Reveal";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import styles from "./Highlights.module.css";
 
 const ITEMS = [
@@ -8,8 +9,7 @@ const ITEMS = [
     title: "Multi-Agent Systems",
     body:
       "Agentic pipelines built with Agno, CrewAI, and LangGraph that orchestrate tools, memory, and reasoning across long-running tasks.",
-    kpi: "Agno · CrewAI",
-    label: "Orchestration",
+    tags: ["Agno", "CrewAI", "LangGraph"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <path d="M3 7.5L12 3l9 4.5-9 4.5L3 7.5z" />
@@ -22,8 +22,7 @@ const ITEMS = [
     title: "RAG Infrastructure",
     body:
       "Document ingestion, chunking, embedding, and PgVector retrieval with FastAPI, Redis, and RabbitMQ for async workloads.",
-    kpi: "PgVector",
-    label: "Retrieval engine",
+    tags: ["FastAPI", "PgVector", "Redis"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -37,8 +36,7 @@ const ITEMS = [
     title: "LLM Evaluation",
     body:
       "Quality and safety testing for production models — DeepEval for RAG metrics, Garak for adversarial probing across OWASP-LLM Top-10.",
-    kpi: "DeepEval · Garak",
-    label: "Quality & safety",
+    tags: ["DeepEval", "Garak", "Azure OpenAI"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <circle cx="11" cy="11" r="7" />
@@ -56,7 +54,8 @@ export default function Highlights() {
   };
 
   return (
-    <section id="next-section" className={styles.section}>
+    <section className={styles.section}>
+      <SectionBackdrop variant="warm" />
       <div className={styles.inner}>
         <div className={styles.head}>
           <Reveal>
@@ -86,9 +85,12 @@ export default function Highlights() {
               <div className={styles.cardIcon}>{it.icon}</div>
               <h3 className={styles.cardTitle}>{it.title}</h3>
               <p className={styles.cardBody}>{it.body}</p>
-              <div className={styles.cardKpi}>
-                <span className={styles.kpiNum}>{it.kpi}</span>
-                <span className={styles.kpiLbl}>{it.label}</span>
+              <div className={styles.cardTags}>
+                {it.tags.map((t) => (
+                  <span key={t} className={styles.cardTag}>
+                    {t}
+                  </span>
+                ))}
               </div>
             </article>
           ))}

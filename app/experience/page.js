@@ -15,6 +15,7 @@ export default function ExperiencePage() {
         title="The"
         accent="résumé."
         lead="A short timeline of where I've worked and what I've shipped — written like a resume, not a highlight reel."
+        variant="cool"
       />
       <Timeline />
     </>

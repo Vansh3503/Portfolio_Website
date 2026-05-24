@@ -6,6 +6,7 @@ import Preloader from "@/components/Preloader/Preloader";
 import SoundProvider from "@/components/SoundProvider/SoundProvider";
 import Cursor from "@/components/Cursor/Cursor";
 import GameDock from "@/components/GameDock/GameDock";
+import ScrollProgress from "@/components/ScrollProgress/ScrollProgress";
 
 export const metadata = {
   title: "Vansh Malhotra — AI Engineer",
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
       <body>
         <SoundProvider>
           <Preloader />
+          <ScrollProgress />
           <Cursor />
           <Header />
           <PageTransition>{children}</PageTransition>

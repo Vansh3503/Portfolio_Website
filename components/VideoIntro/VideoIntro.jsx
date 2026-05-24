@@ -12,29 +12,31 @@ export default function VideoIntro() {
   const heroRef = useRef(null);
   const fgVideoRef = useRef(null);
   const bgVideoRef = useRef(null);
+  // True after the talking-head has played once end-to-end (so we stop looping)
+  const playedThroughRef = useRef(false);
+  // Set to true on first user gesture so we know unmuting is allowed
+  const userInteractedRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
-  const [showSoundBadge, setShowSoundBadge] = useState(true);
   const [videoReady, setVideoReady] = useState(false);
+  const [endedOnce, setEndedOnce] = useState(false);
 
-  // Sync drift between ambient + foreground
+  // Sync drift between ambient + foreground (only while the foreground is still playing)
   const syncVideos = useCallback(() => {
     const fg = fgVideoRef.current;
     const bg = bgVideoRef.current;
-    if (!fg || !bg) return;
+    if (!fg || !bg || playedThroughRef.current) return;
     if (Math.abs(fg.currentTime - bg.currentTime) > 0.25) {
       bg.currentTime = fg.currentTime;
     }
   }, []);
 
-  // GSAP entrance timeline — quick & confident
+  // GSAP entrance timeline
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set(`.${styles.nameInner}`, { yPercent: 110 });
-
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
       tl.to(`.${styles.tagline}`, { opacity: 1, y: 0, duration: 0.7 }, 0)
         .to(
           `.${styles.nameInner}`,
@@ -43,75 +45,36 @@ export default function VideoIntro() {
             duration: 1.1,
             stagger: 0.08,
             ease: "expo.out",
+            clearProps: "transform",
           },
           0.1
         )
-        .to(
-          `.${styles.subtitle}`,
-          { opacity: 1, y: 0, duration: 0.8 },
-          0.45
-        )
-        .to(
-          `.${styles.heroActions}`,
-          { opacity: 1, y: 0, duration: 0.7 },
-          0.55
-        )
-        .to(
-          `.${styles.controls}`,
-          { opacity: 1, y: 0, duration: 0.6 },
-          0.6
-        )
-        .to(
-          `.${styles.metaChips}`,
-          { opacity: 1, y: 0, duration: 0.6 },
-          0.65
-        )
-        .to(
-          `.${styles.scrollIndicator}`,
-          { opacity: 1, y: 0, duration: 0.6 },
-          0.75
-        )
-        .to(
-          `.${styles.soundBadge}`,
-          { opacity: 1, y: 0, duration: 0.6 },
-          0.85
-        );
+        .to(`.${styles.subtitle}`, { opacity: 1, y: 0, duration: 0.8 }, 0.45)
+        .to(`.${styles.heroActions}`, { opacity: 1, y: 0, duration: 0.7 }, 0.55)
+        .to(`.${styles.controls}`, { opacity: 1, y: 0, duration: 0.6 }, 0.6)
+        .to(`.${styles.metaChips}`, { opacity: 1, y: 0, duration: 0.6 }, 0.65)
+        .to(`.${styles.scrollIndicator}`, { opacity: 1, y: 0, duration: 0.6 }, 0.75);
     }, heroRef);
 
-    return () => ctx.revert();
-  }, []);
+    // Safety net: if the user navigates away and back, or the timeline gets
+    // killed mid-flight, force the name back to its final visible state.
+    const safety = setTimeout(() => {
+      try {
+        gsap.set(`.${styles.nameInner}`, { yPercent: 0, clearProps: "transform" });
+      } catch {}
+    }, 2400);
 
-  useEffect(() => {
-    if (!showSoundBadge) return;
-    const t = setTimeout(() => setShowSoundBadge(false), 6500);
-    return () => clearTimeout(t);
-  }, [showSoundBadge]);
+    return () => {
+      clearTimeout(safety);
+      ctx.revert();
+    };
+  }, []);
 
   useEffect(() => {
     const id = setInterval(syncVideos, 1500);
     return () => clearInterval(id);
   }, [syncVideos]);
 
-  useEffect(() => {
-    const onVisibility = () => {
-      const fg = fgVideoRef.current;
-      const bg = bgVideoRef.current;
-      if (!fg || !bg) return;
-      if (document.hidden) {
-        fg.pause();
-        bg.pause();
-      } else if (isPlaying) {
-        fg.play().catch(() => {});
-        bg.play().catch(() => {});
-      }
-    };
-    document.addEventListener("visibilitychange", onVisibility);
-    return () =>
-      document.removeEventListener("visibilitychange", onVisibility);
-  }, [isPlaying]);
-
-  // Safety net: if browser doesn't fire canPlay/loadedData reliably,
-  // reveal once the video has any data after 600ms.
   useEffect(() => {
     if (videoReady) return;
     const t = setTimeout(() => {
@@ -121,11 +84,114 @@ export default function VideoIntro() {
     return () => clearTimeout(t);
   }, [videoReady]);
 
+  // Track ANY user interaction so we know unmuting is allowed by the browser.
+  useEffect(() => {
+    const mark = () => {
+      userInteractedRef.current = true;
+    };
+    window.addEventListener("pointerdown", mark, { passive: true });
+    window.addEventListener("keydown", mark);
+    window.addEventListener("touchstart", mark, { passive: true });
+    window.addEventListener("scroll", mark, { passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", mark);
+      window.removeEventListener("keydown", mark);
+      window.removeEventListener("touchstart", mark);
+      window.removeEventListener("scroll", mark);
+    };
+  }, []);
+
+  // 🎬 When the preloader finishes:
+  //    1. Rewind the hero video to the start
+  //    2. Try to unmute (succeeds if any gesture was made during preload)
+  //    3. Play it once
+  useEffect(() => {
+    const startWithVoice = () => {
+      const fg = fgVideoRef.current;
+      const bg = bgVideoRef.current;
+      if (!fg || !bg) return;
+
+      // Reset both videos
+      try {
+        fg.currentTime = 0;
+        bg.currentTime = 0;
+      } catch {}
+      bg.muted = true; // ambient stays silent
+      bg.play().catch(() => {});
+
+      // Try to unmute. If the browser blocks (no gesture yet), play() rejects
+      // and we silently fall back to muted playback. The first user click on
+      // the unmute button will fix it.
+      fg.muted = false;
+      const p = fg.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => {
+          setIsMuted(false);
+        }).catch(() => {
+          fg.muted = true;
+          fg.play().catch(() => {});
+          setIsMuted(true);
+        });
+      } else {
+        setIsMuted(false);
+      }
+    };
+
+    window.addEventListener("preloader:done", startWithVoice);
+    return () => window.removeEventListener("preloader:done", startWithVoice);
+  }, []);
+
+  // 🎞 When the talking-head finishes its first pass, freeze it on the last
+  //    frame. Ambient blur keeps looping behind for atmosphere.
+  useEffect(() => {
+    const fg = fgVideoRef.current;
+    if (!fg) return;
+    const onEnded = () => {
+      playedThroughRef.current = true;
+      setEndedOnce(true);
+      setIsPlaying(false);
+      // Hold the frame instead of looping
+      try {
+        fg.pause();
+        fg.currentTime = Math.max(0, (fg.duration || 0) - 0.05);
+      } catch {}
+    };
+    fg.addEventListener("ended", onEnded);
+    return () => fg.removeEventListener("ended", onEnded);
+  }, []);
+
+  // Pause when tab is hidden, resume on focus (only while still in first pass)
+  useEffect(() => {
+    const onVisibility = () => {
+      const fg = fgVideoRef.current;
+      const bg = bgVideoRef.current;
+      if (!fg || !bg) return;
+      if (document.hidden) {
+        fg.pause();
+        bg.pause();
+      } else {
+        if (!playedThroughRef.current && isPlaying) fg.play().catch(() => {});
+        bg.play().catch(() => {});
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, [isPlaying]);
+
   const togglePlay = useCallback(() => {
     const fg = fgVideoRef.current;
     const bg = bgVideoRef.current;
     if (!fg || !bg) return;
+
     if (fg.paused) {
+      // If the user hits play AFTER it ended once, restart from 0
+      if (playedThroughRef.current) {
+        try {
+          fg.currentTime = 0;
+        } catch {}
+        playedThroughRef.current = false;
+        setEndedOnce(false);
+      }
       fg.play().catch(() => {});
       bg.play().catch(() => {});
       setIsPlaying(true);
@@ -143,15 +209,16 @@ export default function VideoIntro() {
     fg.muted = next;
     if (bgVideoRef.current) bgVideoRef.current.muted = true;
     setIsMuted(next);
-    if (!next) setShowSoundBadge(false);
-  }, []);
-
-  const handleSoundBadge = useCallback(() => {
-    const fg = fgVideoRef.current;
-    if (!fg) return;
-    fg.muted = false;
-    setIsMuted(false);
-    setShowSoundBadge(false);
+    // If they're unmuting after the video ended, restart it from 0
+    if (!next && playedThroughRef.current) {
+      try {
+        fg.currentTime = 0;
+      } catch {}
+      playedThroughRef.current = false;
+      setEndedOnce(false);
+      fg.play().catch(() => {});
+      setIsPlaying(true);
+    }
   }, []);
 
   const onVideoReady = useCallback(() => setVideoReady(true), []);
@@ -159,13 +226,12 @@ export default function VideoIntro() {
   const scrollToNext = useCallback(() => {
     const next = document.getElementById("next-section");
     if (next) next.scrollIntoView({ behavior: "smooth", block: "start" });
-    else
-      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    else window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
   }, []);
 
   return (
     <section ref={heroRef} className={styles.hero} aria-label="Cinematic intro">
-      {/* Ambient blurred background video */}
+      {/* Ambient blurred background video — always loops, always silent */}
       <div className={styles.ambientWrap} aria-hidden="true">
         <video
           ref={bgVideoRef}
@@ -179,7 +245,7 @@ export default function VideoIntro() {
         />
       </div>
 
-      {/* Foreground talking-head video — full screen */}
+      {/* Foreground talking-head — does NOT loop; plays once with voice */}
       <div className={styles.foreground}>
         <video
           ref={fgVideoRef}
@@ -189,7 +255,6 @@ export default function VideoIntro() {
           src={VIDEO_SRC}
           autoPlay
           muted
-          loop
           playsInline
           preload="auto"
           onLoadedData={onVideoReady}
@@ -197,7 +262,7 @@ export default function VideoIntro() {
         />
       </div>
 
-      {/* Cinematic veils for legibility */}
+      {/* Cinematic veils */}
       <div className={`${styles.veil} ${styles.veilWarm}`} />
       <div className={`${styles.veil} ${styles.veilTop}`} />
       <div className={`${styles.veil} ${styles.veilBottom}`} />
@@ -225,9 +290,9 @@ export default function VideoIntro() {
             <RotatingRole />
             <span className={styles.subtitleText}>
               {" "}
-              · I build with Python, FastAPI, LangGraph, CrewAI, PgVector, Redis,
-              and Azure OpenAI — shipping retrieval, orchestration, and eval
-              pipelines that hold up in production.
+              · I build with Python, FastAPI, LangGraph, CrewAI, PgVector,
+              Redis, and Azure OpenAI — shipping retrieval, orchestration, and
+              eval pipelines that hold up in production.
             </span>
           </p>
 
@@ -238,9 +303,18 @@ export default function VideoIntro() {
                 <path d="M5 12h14" /><path d="M13 5l7 7-7 7" />
               </svg>
             </Link>
-            <Link href="/about" className={styles.ghostBtn}>
-              About me
-            </Link>
+            <a
+              href="/Vansh_Malhotra_Resume.pdf"
+              download
+              className={styles.ghostBtn}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 4v12" />
+                <path d="M6 12l6 6 6-6" />
+                <path d="M5 20h14" />
+              </svg>
+              Download CV
+            </a>
           </div>
         </div>
 
@@ -250,11 +324,17 @@ export default function VideoIntro() {
               type="button"
               className={styles.glassBtn}
               onClick={togglePlay}
-              aria-label={isPlaying ? "Pause video" : "Play video"}
+              aria-label={
+                isPlaying
+                  ? "Pause video"
+                  : endedOnce
+                  ? "Replay intro"
+                  : "Play video"
+              }
               aria-pressed={!isPlaying}
               data-no-sound
             >
-              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+              {isPlaying ? <PauseIcon /> : endedOnce ? <ReplayIcon /> : <PlayIcon />}
             </button>
             <button
               type="button"
@@ -274,24 +354,6 @@ export default function VideoIntro() {
           </div>
         </div>
 
-        {/* Tap-for-sound badge */}
-        <button
-          type="button"
-          onClick={handleSoundBadge}
-          className={`${styles.soundBadge} ${
-            showSoundBadge && isMuted
-              ? styles.soundBadgeVisible
-              : styles.soundBadgeHidden
-          }`}
-          aria-label="Tap for sound"
-        >
-          <span className={styles.soundBadgeIcon}>
-            <SoundIcon />
-          </span>
-          Tap for sound
-        </button>
-
-        {/* Scroll indicator */}
         <button
           type="button"
           className={styles.scrollIndicator}
@@ -320,6 +382,14 @@ function PauseIcon() {
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <rect x="6.5" y="5" width="3.5" height="14" rx="1" />
       <rect x="14" y="5" width="3.5" height="14" rx="1" />
+    </svg>
+  );
+}
+function ReplayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 12a9 9 0 11-3-6.7" />
+      <path d="M21 4v5h-5" />
     </svg>
   );
 }

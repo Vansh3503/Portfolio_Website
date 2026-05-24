@@ -53,9 +53,7 @@
 .foregroundReady {
   opacity: 1;
   transition: opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-/* ---------- Layer 3: Cinematic gradient veils ---------- */
+}/* ---------- Layer 3: Cinematic gradient veils ---------- */
 .veil {
   position: absolute;
   inset: 0;
@@ -179,7 +177,9 @@
 .nameWord {
   display: inline-block;
   overflow: hidden;
-  padding-bottom: 0.12em;
+  padding-bottom: 0.18em;
+  padding-top: 0.06em;
+  line-height: 1;
 }
 
 .nameInner {
@@ -440,45 +440,117 @@
   .subtitle { font-size: 14px; }
   .metaChips { display: none; }
   .heroActions { flex-wrap: wrap; }
-  .soundBadge {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: clamp(96px, 12vh, 120px);
-  }
-  .soundBadge:hover { transform: translateX(50%) translateY(-2px); }
 }
 
-@media (max-width: 480px) {
-  .ambientWrap { filter: blur(32px) saturate(1.3) brightness(0.8); }
-  .glassBtn { width: 44px; height: 44px; }
+/* Phone layout: portrait video frame keeps the face up top, and a strong
+   dark gradient at the bottom carves out a readable zone for the content. */
+@media (max-width: 640px) {
+  /* Anchor the face higher so the head sits in the upper third */
+  .foregroundVideo {
+    object-position: 50% 18%;
+    transform: scale(1.06);
+  }
+
+  /* Stronger bottom veil so name & buttons stay legible over the chest area */
+  .veilBottom {
+    background: linear-gradient(
+      0deg,
+      rgba(5, 5, 8, 1) 0%,
+      rgba(5, 5, 8, 0.92) 22%,
+      rgba(5, 5, 8, 0.7) 42%,
+      rgba(5, 5, 8, 0.2) 70%,
+      rgba(5, 5, 8, 0) 100%
+    );
+  }
+
+  /* Top veil eased so the face has room to breathe */
+  .veilTop {
+    background: linear-gradient(
+      180deg,
+      rgba(5, 5, 8, 0.78) 0%,
+      rgba(5, 5, 8, 0.25) 18%,
+      rgba(5, 5, 8, 0) 38%
+    );
+  }
+
+  /* Content lives in the lower half; pushes name + subtitle + CTAs down */
   .content {
-    padding: clamp(86px, 14vh, 120px) 20px clamp(36px, 8vh, 64px);
+    padding: 0 18px 24px;
+    justify-content: flex-end;
   }
-  .name {
-    font-size: clamp(42px, 14vw, 80px);
-    letter-spacing: -0.03em;
+
+  .center {
+    margin: 0;
+    padding-bottom: 8px;
+    align-items: flex-start;
   }
+
+  .ambientWrap { filter: blur(28px) saturate(1.3) brightness(0.7); }
+  .glassBtn { width: 42px; height: 42px; }
+
   .tagline {
     font-size: 10px;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.28em;
+    margin-bottom: 14px;
   }
-  .tagline::before { width: 24px; }
-  .subtitle { font-size: 13.5px; line-height: 1.55; }
-  .heroActions { gap: 10px; }
+  .tagline::before { width: 22px; }
+
+  .name {
+    font-size: clamp(44px, 13.5vw, 72px);
+    letter-spacing: -0.03em;
+    line-height: 0.94;
+  }
+  /* Lower vertical padding inside the masked word so descenders don't clip */
+  .nameWord { padding-bottom: 0.1em; padding-top: 0.08em; }
+
+  /* Mobile safety: force the inner span visible after a short delay so it
+     can't get stuck offscreen even if GSAP gets killed mid-animation. */
+  .nameInner {
+    animation: nameMobileFallback 0.01s linear 2.5s forwards;
+  }
+@keyframes nameMobileFallback {
+    to { transform: translateY(0); }
+  }
+
+  .subtitle {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-top: 18px;
+  }
+
+  .heroActions {
+    margin-top: 22px;
+    gap: 10px;
+    width: 100%;
+  }
+
   .primaryBtn,
   .ghostBtn {
     padding: 12px 18px;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-  }
-  .scrollIndicator { font-size: 9px; }
-  .scrollLine { height: 44px; }
-  .soundBadge {
-    bottom: clamp(76px, 11vh, 100px);
     font-size: 11px;
-    padding: 8px 12px 8px 10px;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
+    flex: 1 1 auto;
+    justify-content: center;
   }
+
+  .bottomBar {
+    margin-top: 18px;
+  }
+
+  .scrollIndicator {
+    font-size: 9px;
+    bottom: 14px;
+  }
+  .scrollLine { height: 36px; }
+}
+
+@media (max-width: 380px) {
+  .name { font-size: clamp(38px, 12.5vw, 58px); }
+  .subtitle { font-size: 12.5px; }
+  .primaryBtn,
+  .ghostBtn { padding: 11px 14px; font-size: 11px; }
+  .glassBtn { width: 40px; height: 40px; }
+  .glassBtn svg { width: 16px; height: 16px; }
 }
 
 

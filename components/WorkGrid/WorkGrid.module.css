@@ -3,9 +3,13 @@
   padding: clamp(60px, 10vh, 100px) clamp(24px, 5vw, 64px)
     clamp(80px, 14vh, 160px);
   background: linear-gradient(180deg, #08080b 0%, #06060a 100%);
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .inner {
+  position: relative;
+  z-index: 2;
   max-width: 1240px;
   margin: 0 auto;
 }
@@ -113,49 +117,21 @@
 
 .card > * { position: relative; z-index: 2; }
 
-/* Visual header inside the card — abstract gradient artwork */
+/* Visual header inside the card — animated SVG poster */
 .poster {
   position: relative;
-  height: 180px;
+  height: 200px;
   border-radius: 14px;
   overflow: hidden;
-  background:
-    radial-gradient(70% 60% at 80% 0%, rgba(255, 138, 61, 0.7), transparent 70%),
-    radial-gradient(60% 60% at 0% 100%, rgba(90, 169, 255, 0.5), transparent 70%),
-    linear-gradient(160deg, #1a0e08 0%, #0a0a12 60%, #08111d 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.posterGrid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 36px 36px;
-  background-position: -1px -1px;
-  mask-image: radial-gradient(80% 70% at 50% 50%, #000, transparent 80%);
-  -webkit-mask-image: radial-gradient(80% 70% at 50% 50%, #000, transparent 80%);
-}
-
-.posterGlyph {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 80px;
-  letter-spacing: -0.04em;
-  color: rgba(255, 255, 255, 0.06);
-  pointer-events: none;
+  isolation: isolate;
 }
 
 .posterChip {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -183,6 +159,7 @@
   position: absolute;
   top: 16px;
   right: 16px;
+  z-index: 2;
   font-family: "Space Grotesk", sans-serif;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.7);
@@ -253,8 +230,7 @@
 
 @media (max-width: 880px) {
   .list { grid-template-columns: 1fr; }
-  .poster { height: 150px; }
-  .posterGlyph { font-size: 60px; }
+  .poster { height: 170px; }
 }
 
 
@@ -262,8 +238,7 @@
   .filters { gap: 4px; padding: 4px; }
   .filterBtn { padding: 8px 12px; font-size: 11px; letter-spacing: 0.14em; }
   .card { padding: 22px 20px; min-height: 0; }
-  .poster { height: 130px; }
-  .posterGlyph { font-size: 50px; }
+  .poster { height: 150px; }
   .cardTitle { font-size: 20px; }
   .cardSummary { font-size: 13.5px; }
 }

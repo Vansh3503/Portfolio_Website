@@ -1,12 +1,14 @@
 "use client";
 
 import Reveal from "@/components/Reveal/Reveal";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import { EXPERIENCE, CERTIFICATIONS } from "@/lib/projects";
 import styles from "./Timeline.module.css";
 
 export default function Timeline() {
   return (
     <section className={styles.section}>
+      <SectionBackdrop variant="cool" />
       <div className={styles.inner}>
         <ol className={styles.list}>
           {EXPERIENCE.map((job, idx) => (

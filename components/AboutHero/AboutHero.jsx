@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Reveal from "@/components/Reveal/Reveal";
 import NeuralNet from "@/components/NeuralNet/NeuralNet";
+import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import { SKILLS } from "@/lib/projects";
 import styles from "./AboutHero.module.css";
 
@@ -82,6 +83,7 @@ export default function AboutHero() {
 
   return (
     <section className={styles.section}>
+      <SectionBackdrop variant="warm" />
       <div className={styles.inner}>
         <div className={styles.copy}>
           <Reveal>

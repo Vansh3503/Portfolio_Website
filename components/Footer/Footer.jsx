@@ -44,6 +44,18 @@ export default function Footer() {
               <path d="M5 12h14" /><path d="M13 5l7 7-7 7" />
             </svg>
           </a>
+          <a
+            className={styles.social}
+            href="/Vansh_Malhotra_Resume.pdf"
+            download
+          >
+            Resume
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 4v12" />
+              <path d="M6 12l6 6 6-6" />
+              <path d="M5 20h14" />
+            </svg>
+          </a>
         </div>
       </div>
 
