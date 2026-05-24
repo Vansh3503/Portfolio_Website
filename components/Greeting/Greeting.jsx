@@ -4,11 +4,9 @@ import { motion } from "framer-motion";
 import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
 import styles from "./Greeting.module.css";
 
-const WORDS = ["Hi,", "I'm", "Vansh."];
-
 export default function Greeting() {
   return (
-    <section id="next-section" className={styles.section}>
+    <section className={styles.section}>
       <SectionBackdrop variant="warm" />
       <div className={styles.inner}>
         <motion.div
@@ -22,47 +20,51 @@ export default function Greeting() {
           A quick hello
         </motion.div>
 
-        <h2 className={styles.headline}>
+        <h2 className={styles.headline} aria-label="Hi, I'm Vansh">
+          {/* Line 1: wave + "Hi," */}
           <motion.span
-            className={styles.wave}
-            initial={{ rotate: 0, opacity: 0 }}
-            whileInView={{ opacity: 1, rotate: [0, 14, -8, 14, -4, 10, 0] }}
+            className={`${styles.row} ${styles.rowFlex}`}
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.5, delay: 0.1, ease: "easeInOut" }}
-            aria-hidden="true"
+            transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1], delay: 0.2 }}
           >
-            👋
-          </motion.span>{" "}
+            <motion.span
+              className={styles.wave}
+              animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatDelay: 3,
+                ease: "easeInOut",
+              }}
+              aria-hidden="true"
+            >
+              👋
+            </motion.span>
+            <span className={styles.word}>Hi,</span>
+          </motion.span>
+
+          {/* Line 2: "I'm" */}
           <motion.span
-            className={styles.words}
-            initial="hidden"
-            whileInView="show"
+            className={styles.row}
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              hidden: {},
-              show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
-            }}
+            transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1], delay: 0.34 }}
           >
-            {WORDS.map((w, i) => (
-              <motion.span
-                key={i}
-                className={styles.wordWrap}
-                variants={{
-                  hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                    transition: { duration: 0.7, ease: [0.22, 0.61, 0.36, 1] },
-                  },
-                }}
-              >
-                {w}
-                {i === WORDS.length - 1 ? null : (
-                  <span aria-hidden="true">&nbsp;</span>
-                )}
-              </motion.span>
-            ))}
+            I&apos;m
+          </motion.span>
+
+          {/* Line 3: "Vansh." */}
+          <motion.span
+            className={styles.row}
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1], delay: 0.46 }}
+          >
+            Vansh.
           </motion.span>
         </h2>
 
@@ -71,7 +73,7 @@ export default function Greeting() {
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, delay: 0.6 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
         >
           I&apos;m an AI engineer who builds the unglamorous middle layer
           between models and product —{" "}

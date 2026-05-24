@@ -16,6 +16,7 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  width: 100%;
 }
 
 .eyebrow {
@@ -26,7 +27,7 @@
   letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--accent-warm);
-  margin: 0 0 28px;
+  margin: 0 0 24px;
 }
 
 .eyebrowDot {
@@ -44,21 +45,33 @@
 }
 
 .headline {
+  margin: 0 0 30px;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  line-height: 0.95;
+  text-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.row {
+  display: block;
   font-family: "Space Grotesk", "Inter", sans-serif;
   font-weight: 700;
-  font-size: clamp(56px, 11vw, 168px);
-  line-height: 0.95;
+  font-size: clamp(54px, 10vw, 152px);
   letter-spacing: -0.04em;
-  margin: 0 0 36px;
+  line-height: 1;
   color: #ffffff;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.18em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   max-width: 100%;
-  overflow-wrap: anywhere;
-  word-break: keep-all;
-  text-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.rowFlex {
+  display: flex;
+  align-items: center;
+  gap: 0.18em;
+  flex-wrap: nowrap;
 }
 
 .wave {
@@ -66,23 +79,18 @@
   transform-origin: 70% 70%;
   font-size: 0.85em;
   filter: drop-shadow(0 6px 20px rgba(255, 138, 61, 0.4));
+  flex: none;
 }
 
-.words {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-}
-
-.wordWrap {
+.word {
   display: inline-block;
-  white-space: pre;
+  white-space: nowrap;
 }
 
 .lede {
-  margin: 0 0 30px;
+  margin: 0 0 28px;
   max-width: 760px;
-  font-size: clamp(16px, 1.3vw, 20px);
+  font-size: clamp(15px, 1.2vw, 19px);
   line-height: 1.6;
   color: var(--ink-soft);
 }
@@ -124,13 +132,13 @@
 }
 
 @media (max-width: 720px) {
-  .section { padding: clamp(80px, 12vh, 120px) clamp(20px, 5vw, 40px); }
-  .headline { font-size: clamp(48px, 14vw, 96px); margin-bottom: 26px; }
-  .lede { font-size: 15px; }
+  .section { padding: clamp(80px, 12vh, 120px) 20px; }
+  .row { font-size: clamp(44px, 13vw, 88px); }
+  .lede { font-size: 14.5px; }
   .kbd { font-size: 12px; }
 }
 
 @media (max-width: 420px) {
-  .headline { font-size: clamp(42px, 13vw, 72px); }
+  .row { font-size: clamp(40px, 12vw, 68px); letter-spacing: -0.03em; }
   .eyebrow { font-size: 11px; letter-spacing: 0.32em; }
 }

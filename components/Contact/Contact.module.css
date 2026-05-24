@@ -222,3 +222,115 @@
   .field textarea { font-size: 14px; padding: 12px 14px; }
   .submit { padding: 12px 18px; font-size: 12px; }
 }
+
+
+/* ---------- Validation states ---------- */
+.field label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.counter {
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: 0.18em;
+  font-family: "SFMono-Regular", "JetBrains Mono", monospace;
+  transition: color 0.3s ease;
+}
+
+.counterWarn { color: var(--accent-warm); }
+.counterDanger { color: #ff8b8b; }
+
+.fieldError input,
+.fieldError textarea {
+  border-color: rgba(255, 108, 108, 0.6);
+  background: rgba(255, 108, 108, 0.06);
+}
+
+.fieldError input:focus,
+.fieldError textarea:focus {
+  border-color: rgba(255, 108, 108, 0.8);
+}
+
+.fieldOk input,
+.fieldOk textarea {
+  border-color: rgba(93, 211, 158, 0.45);
+}
+
+.errorRow {
+  min-height: 18px;
+  margin-top: 4px;
+}
+
+.errorMsg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff8b8b;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Success card ---------- */
+.success {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.successIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(93, 211, 158, 0.12);
+  border: 1px solid rgba(93, 211, 158, 0.4);
+  color: #5dd39e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.successIcon svg { width: 24px; height: 24px; }
+
+.successTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.successBody {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 20px;
+}
+
+.successBody a {
+  color: var(--accent-warm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.successReset {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.successReset:hover {
+  background: rgba(255, 138, 61, 0.08);
+  border-color: rgba(255, 138, 61, 0.45);
+}

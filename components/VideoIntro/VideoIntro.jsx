@@ -35,7 +35,9 @@ export default function VideoIntro() {
   // GSAP entrance timeline
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(`.${styles.nameInner}`, { yPercent: 110 });
+      // Reset to starting state every time, in case React re-mounted us
+      gsap.set(`.${styles.nameInner}`, { yPercent: 110, clearProps: "" });
+
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.to(`.${styles.tagline}`, { opacity: 1, y: 0, duration: 0.7 }, 0)
         .to(
@@ -56,16 +58,36 @@ export default function VideoIntro() {
         .to(`.${styles.scrollIndicator}`, { opacity: 1, y: 0, duration: 0.6 }, 0.75);
     }, heroRef);
 
-    // Safety net: if the user navigates away and back, or the timeline gets
-    // killed mid-flight, force the name back to its final visible state.
+    // Belt + suspenders: force the name into its final state after 2s,
+    // regardless of what GSAP did. Prevents a stuck-at-110% bug on iOS Safari
+    // when the page is restored from BFCache or the font swaps in late.
     const safety = setTimeout(() => {
       try {
-        gsap.set(`.${styles.nameInner}`, { yPercent: 0, clearProps: "transform" });
+        document
+          .querySelectorAll(`.${styles.nameInner}`)
+          .forEach((el) => {
+            el.style.transform = "translateY(0)";
+          });
       } catch {}
-    }, 2400);
+    }, 2200);
+
+    // If the page is restored from BFCache (back/forward), reset state.
+    const onPageShow = (e) => {
+      if (e.persisted) {
+        try {
+          document
+            .querySelectorAll(`.${styles.nameInner}`)
+            .forEach((el) => {
+              el.style.transform = "translateY(0)";
+            });
+        } catch {}
+      }
+    };
+    window.addEventListener("pageshow", onPageShow);
 
     return () => {
       clearTimeout(safety);
+      window.removeEventListener("pageshow", onPageShow);
       ctx.revert();
     };
   }, []);
@@ -276,12 +298,16 @@ export default function VideoIntro() {
           <h1 className={styles.nameStack}>
             <span className={styles.name}>
               <span className={styles.nameWord}>
-                <span className={styles.nameInner}>Vansh</span>
+                <span className={styles.nameInner} style={{ transform: "translateY(110%)" }}>
+                  Vansh
+                </span>
               </span>
             </span>
             <span className={`${styles.name} ${styles.nameLast}`}>
               <span className={styles.nameWord}>
-                <span className={styles.nameInner}>Malhotra</span>
+                <span className={styles.nameInner} style={{ transform: "translateY(110%)" }}>
+                  Malhotra
+                </span>
               </span>
             </span>
           </h1>
