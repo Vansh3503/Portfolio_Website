@@ -7,8 +7,7 @@ import styles from "./ProjectPoster.module.css";
  * Animated SVG posters for each project. They convey what the project does
  * better than a placeholder image — and they animate on hover.
  *
- * Variants: ai-studio | multi-agent-qa | browser-automation
- *           llm-eval-security | multimodal-rag | docuquery
+ * Variants: ai-studio | cyberstudio | assessment-studio
  */
 export default function ProjectPoster({ slug, accent = "#ff8a3d" }) {
   const Variant = VARIANTS[slug] || DefaultPoster;
@@ -394,9 +393,6 @@ function DefaultPoster() {
 
 const VARIANTS = {
   "ai-studio": AiStudioPoster,
-  "multi-agent-qa": MultiAgentPoster,
-  "browser-automation": BrowserAutomationPoster,
-  "llm-eval-security": LlmEvalPoster,
-  "multimodal-rag": MultimodalPoster,
-  docuquery: DocuQueryPoster,
+  cyberstudio: MultiAgentPoster,
+  "assessment-studio": BrowserAutomationPoster,
 };

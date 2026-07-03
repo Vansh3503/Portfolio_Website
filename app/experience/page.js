@@ -4,7 +4,7 @@ import Timeline from "@/components/Timeline/Timeline";
 export const metadata = {
   title: "Experience — Vansh Malhotra",
   description:
-    "AI Engineering experience: founding the AI Studio at eInfoChips, multi-agent QA, RAG, and LLM evaluation.",
+    "AI Engineering experience: founding AI Studio (NomAIzo™) at eInfoChips, multi-agent systems, CyberStudio compliance, and LLM security testing.",
 };
 
 export default function ExperiencePage() {

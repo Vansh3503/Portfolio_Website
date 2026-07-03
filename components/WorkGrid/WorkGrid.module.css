@@ -175,6 +175,18 @@
   color: var(--ink);
 }
 
+.cardLink {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.25s ease;
+}
+
+.cardLink:hover {
+  color: var(--accent);
+}
+
 .cardSummary {
   color: var(--ink-soft);
   font-size: 14.5px;

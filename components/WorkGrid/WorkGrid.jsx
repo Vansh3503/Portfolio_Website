@@ -10,17 +10,13 @@ import styles from "./WorkGrid.module.css";
 const FILTERS = [
   { key: "all", label: "All" },
   { key: "ai-studio", label: "AI Studio" },
-  { key: "rag", label: "RAG" },
-  { key: "eval", label: "Eval & Security" },
-  { key: "personal", label: "Personal" },
+  { key: "compliance", label: "Compliance" },
 ];
 
 function tagOf(slug) {
-  if (slug === "ai-studio" || slug === "multi-agent-qa" || slug === "browser-automation")
+  if (slug === "ai-studio" || slug === "assessment-studio")
     return "ai-studio";
-  if (slug === "multimodal-rag") return "rag";
-  if (slug === "llm-eval-security") return "eval";
-  if (slug === "docuquery") return "personal";
+  if (slug === "cyberstudio") return "compliance";
   return "all";
 }
 
@@ -85,7 +81,18 @@ export default function WorkGrid() {
                   <span className={styles.posterYear}>{p.year}</span>
                 </div>
 
-                <h3 className={styles.cardTitle}>{p.title}</h3>
+                <h3 className={styles.cardTitle}>
+                  {p.link ? (
+                    <a href={p.link} target="_blank" rel="noreferrer noopener" className={styles.cardLink}>
+                      {p.title}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginLeft: 6, opacity: 0.5 }}>
+                        <path d="M7 17L17 7" /><path d="M8 7h9v9" />
+                      </svg>
+                    </a>
+                  ) : (
+                    p.title
+                  )}
+                </h3>
                 <p className={styles.cardSummary}>{p.summary}</p>
 
                 <span className={styles.impact}>

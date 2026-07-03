@@ -2,7 +2,7 @@
 
 import Reveal from "@/components/Reveal/Reveal";
 import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
-import { EXPERIENCE, CERTIFICATIONS } from "@/lib/projects";
+import { EXPERIENCE, CERTIFICATIONS, AWARDS } from "@/lib/projects";
 import styles from "./Timeline.module.css";
 
 export default function Timeline() {
@@ -60,6 +60,22 @@ export default function Timeline() {
             </ul>
           </div>
         </Reveal>
+
+        {AWARDS && AWARDS.length > 0 && (
+          <Reveal>
+            <div className={styles.certBlock}>
+              <h3 className={styles.certTitle}>Awards</h3>
+              <ul className={styles.certList}>
+                {AWARDS.map((a) => (
+                  <li key={a.title} className={styles.certItem}>
+                    <span className={styles.certBullet} />
+                    <strong>{a.title}</strong>, {a.org} ({a.year}) — {a.detail}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        )}
 
         <Reveal>
           <div className={styles.eduBlock}>

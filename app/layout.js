@@ -11,12 +11,12 @@ import ScrollProgress from "@/components/ScrollProgress/ScrollProgress";
 export const metadata = {
   title: "Vansh Malhotra — AI Engineer",
   description:
-    "Cinematic portfolio of Vansh Malhotra — AI Engineer building multi-agent systems, RAG pipelines, and LLM infrastructure.",
+    "Portfolio of Vansh Malhotra — AI Engineer who founded AI Studio (NomAIzo™), builds multi-agent LLM systems, RAG infrastructure, and adversarial security testing at eInfoChips.",
   metadataBase: new URL("https://vanshmalhotra.dev"),
   openGraph: {
     title: "Vansh Malhotra — AI Engineer",
     description:
-      "Cinematic portfolio of Vansh Malhotra — AI Engineer building multi-agent systems, RAG pipelines, and LLM infrastructure.",
+      "Portfolio of Vansh Malhotra — AI Engineer who founded AI Studio (NomAIzo™), builds multi-agent LLM systems, RAG infrastructure, and adversarial security testing at eInfoChips.",
     type: "website",
   },
 };

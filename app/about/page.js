@@ -5,7 +5,7 @@ import OffDuty from "@/components/OffDuty/OffDuty";
 export const metadata = {
   title: "About — Vansh Malhotra",
   description:
-    "AI Engineer building agentic systems, RAG infrastructure, and LLM evaluation pipelines.",
+    "AI Engineer who founded AI Studio (NomAIzo™), builds multi-agent LLM systems, RAG infrastructure, and adversarial security testing at eInfoChips.",
 };
 
 export default function AboutPage() {

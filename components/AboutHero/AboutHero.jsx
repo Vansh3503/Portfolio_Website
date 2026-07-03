@@ -89,47 +89,46 @@ export default function AboutHero() {
           <Reveal>
             <p className={styles.eyebrow}>About</p>
             <h2 className={styles.title}>
-              An AI engineer who treats UX, infra, and storytelling as one craft.
+              An AI engineer who founded AI Studio, shipped NomAIzo\u2122, and builds multi-agent LLM systems at production scale.
             </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
             <p className={styles.lead}>
-              I&apos;m <strong>Vansh Malhotra</strong>, an AI engineer who builds
-              the unglamorous middle layer between models and product —
-              retrieval, orchestration, evaluation, and the infra that keeps
-              it all honest in production.
+              I&apos;m <strong>Vansh Malhotra</strong>, an AI engineer who founded
+              and scaled eInfoChips&apos; AI Studio initiative from a solo
+              proof-of-concept into a 9–11 member team, productized company-wide
+              as <strong>NomAIzo™ AI Studio</strong>.
             </p>
             <p className={styles.lead}>
-              I work in <strong>Python</strong> across{" "}
-              <strong>FastAPI</strong>, <strong>LangGraph</strong>,{" "}
-              <strong>CrewAI</strong>, and <strong>Agno</strong> for agentic
-              systems; <strong>PgVector</strong>, <strong>Redis</strong>, and{" "}
-              <strong>RabbitMQ</strong> for retrieval and async pipelines;
-              and <strong>Docker</strong>, <strong>Kubernetes (AKS)</strong>,
-              and <strong>Kong</strong> when those systems need to ship.
+              I build <strong>multi-agent LLM systems</strong> with{" "}
+              <strong>Agno</strong>, <strong>RAG infrastructure</strong> with{" "}
+              <strong>PgVector</strong> and <strong>Docling</strong>, and{" "}
+              <strong>AI-driven test automation</strong> across web, desktop, and
+              mobile using <strong>Playwright</strong> and{" "}
+              <strong>Appium</strong>.
             </p>
             <p className={styles.lead}>
-              On the rigor side I lean on <strong>DeepEval</strong> for RAG
-              quality and <strong>Garak</strong> for adversarial probing
-              across the OWASP-LLM Top-10. I care about retrieval precision,
-              eval discipline, and motion that makes the work feel as good as
-              it works.
+              I also built <strong>CyberStudio</strong> for EU CRA/RED compliance
+              gap analysis, and established LLM observability and adversarial
+              testing standards using <strong>Langfuse</strong> and{" "}
+              <strong>Garak</strong>, achieving 90% security accuracy across 28
+              attack probes.
             </p>
           </Reveal>
 
           <Reveal stagger={`.${styles.stat}`} className={styles.statRow}>
             <div className={styles.stat}>
-              <div className={styles.statValue}>~1.5y</div>
+              <div className={styles.statValue}>~2y</div>
               <div className={styles.statLabel}>In production AI</div>
             </div>
             <div className={styles.stat}>
-              <div className={styles.statValue}>Python</div>
-              <div className={styles.statLabel}>Primary language</div>
+              <div className={styles.statValue}>9–11</div>
+              <div className={styles.statLabel}>Team members led</div>
             </div>
             <div className={styles.stat}>
-              <div className={styles.statValue}>Ship</div>
-              <div className={styles.statLabel}>Default mode</div>
+              <div className={styles.statValue}>NomAIzo™</div>
+              <div className={styles.statLabel}>Productized platform</div>
             </div>
           </Reveal>
         </div>

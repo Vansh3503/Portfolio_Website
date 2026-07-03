@@ -6,10 +6,10 @@ import styles from "./RotatingRole.module.css";
 
 const ROLES = [
   "AI Engineer",
-  "RAG Architect",
+  "AI Studio Founder",
   "Multi-Agent Builder",
-  "LLM Eval Nerd",
-  "Python Engineer",
+  "RAG Architect",
+  "LLM Security Nerd",
 ];
 
 export default function RotatingRole({ interval = 2400 }) {

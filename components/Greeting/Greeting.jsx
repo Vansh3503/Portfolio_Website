@@ -75,11 +75,12 @@ export default function Greeting() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, delay: 0.7 }}
         >
-          I&apos;m an AI engineer who builds the unglamorous middle layer
-          between models and product —{" "}
-          <span className={styles.ledeAccent}>retrieval, orchestration,</span>{" "}
-          and <span className={styles.ledeAccent}>evaluation pipelines</span>{" "}
-          that hold up in production.
+          I&apos;m an AI engineer who founded and scaled eInfoChips&apos; AI Studio
+          from a solo proof-of-concept into a 9–11 member team —{" "}
+          <span className={styles.ledeAccent}>multi-agent LLM systems,</span>{" "}
+          <span className={styles.ledeAccent}>RAG infrastructure,</span>{" "}
+          and <span className={styles.ledeAccent}>adversarial LLM security testing</span>{" "}
+          across production platforms.
         </motion.p>
 
         <motion.div

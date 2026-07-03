@@ -6,10 +6,10 @@ import styles from "./Highlights.module.css";
 
 const ITEMS = [
   {
-    title: "Multi-Agent Systems",
+    title: "Multi-Agent Systems & Orchestration",
     body:
-      "Agentic pipelines built with Agno, CrewAI, and LangGraph that orchestrate tools, memory, and reasoning across long-running tasks.",
-    tags: ["Agno", "CrewAI", "LangGraph"],
+      "Designed supervisor-routing Team architectures on Agno, scaling a solo proof-of-concept into a 9–11 member initiative (NomAIzo™). Shipped CyberStudio with 6+ specialized GPT-4o agents, automating EU Cyber Resilience Act compliance gap assessments at ~70% accuracy.",
+    tags: ["Agno", "GPT-4o", "CrewAI", "NomAIzo™"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <path d="M3 7.5L12 3l9 4.5-9 4.5L3 7.5z" />
@@ -19,10 +19,10 @@ const ITEMS = [
     ),
   },
   {
-    title: "RAG Infrastructure",
+    title: "Enterprise RAG & Microservices",
     body:
-      "Document ingestion, chunking, embedding, and PgVector retrieval with FastAPI, Redis, and RabbitMQ for async workloads.",
-    tags: ["FastAPI", "PgVector", "Redis"],
+      "Architected event-driven 14-microservice systems on FastAPI and RabbitMQ. Engineered high-throughput RAG pipelines with Docling OCR and dual, physically isolated PgVector knowledge bases utilizing hybrid semantic + keyword search and content-hash deduplication.",
+    tags: ["FastAPI", "RabbitMQ", "PgVector", "Docling"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -33,10 +33,10 @@ const ITEMS = [
     ),
   },
   {
-    title: "LLM Evaluation",
+    title: "Model Safety & Platform Security",
     body:
-      "Quality and safety testing for production models — DeepEval for RAG metrics, Garak for adversarial probing across OWASP-LLM Top-10.",
-    tags: ["DeepEval", "Garak", "Azure OpenAI"],
+      "Established Langfuse and Garak observability and adversarial testing (90% security accuracy across 28 attack probes). Integrated Wiz for continuous code/container scanning and hardened APIs via Fernet/bcrypt encryption and Redis JWT blacklisting.",
+    tags: ["Langfuse", "Garak", "Wiz", "DeepEval"],
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <circle cx="11" cy="11" r="7" />

@@ -8,7 +8,7 @@ import { PROJECTS } from "@/lib/projects";
 import styles from "./FeaturedWork.module.css";
 
 export default function FeaturedWork() {
-  const featured = PROJECTS.slice(0, 4);
+  const featured = PROJECTS.slice(0, 3);
 
   return (
     <section className={styles.section}>
@@ -53,7 +53,16 @@ export default function FeaturedWork() {
               transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
               <div>
-                <h3 className={styles.rowTitle}>{p.title}</h3>
+                <h3 className={styles.rowTitle}>
+                  {p.link ? (
+                    <a href={p.link} target="_blank" rel="noreferrer noopener" style={{ color: "inherit", textDecoration: "none" }}>
+                      {p.title}
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginLeft: 6, opacity: 0.4 }}>
+                        <path d="M7 17L17 7" /><path d="M8 7h9v9" />
+                      </svg>
+                    </a>
+                  ) : p.title}
+                </h3>
                 <div className={styles.rowMeta}>{p.company}</div>
               </div>
               <div className={styles.rowImpact}>{p.impact}</div>

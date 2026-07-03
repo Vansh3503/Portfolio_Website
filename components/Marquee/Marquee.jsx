@@ -3,11 +3,11 @@ import styles from "./Marquee.module.css";
 const ITEMS = [
   { label: "Multi-Agent Systems", accent: true },
   { label: "RAG Pipelines" },
-  { label: "LLM Evaluation", accent: true },
-  { label: "FastAPI · LangGraph · Agno" },
-  { label: "Azure AKS · Kong · Helm", accent: true },
-  { label: "Browser Automation" },
-  { label: "PgVector · Redis · RabbitMQ", accent: true },
+  { label: "NomAIzo™ AI Studio", accent: true },
+  { label: "FastAPI · Agno · PgVector" },
+  { label: "CyberStudio · EU CRA", accent: true },
+  { label: "Playwright · Appium" },
+  { label: "Langfuse · Garak · DeepEval", accent: true },
   { label: "Production Ready" },
 ];
 
